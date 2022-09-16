@@ -2,10 +2,18 @@
 //!
 //! # Usage
 //!
-//! Serde CBOR supports Rust 1.40 and up. Add this to your `Cargo.toml`:
+//! Serde CBOR 2 supports Rust 1.62 and up. Add this to your `Cargo.toml`:
+//!
 //! ```toml
 //! [dependencies]
-//! serde_cbor = "0.10"
+//! serde_cbor_2 = "0.12"
+//! ```
+//!
+//! Serde CBOR 2 can be used as a 'drop in' replacement of `serde_cbor`
+//!
+//! ```toml
+//! [dependencies]
+//! serde_cbor = { version = "0.12", package = "serde_cbor_2" }
 //! ```
 //!
 //! Storing and loading Rust types is easy and requires only
@@ -36,13 +44,13 @@
 //!     // Write Ferris to the given file.
 //!     // Instead of a file you can use any type that implements `io::Write`
 //!     // like a HTTP body, database connection etc.
-//!     serde_cbor::to_writer(ferris_file, &ferris)?;
+//!     serde_cbor_2::to_writer(ferris_file, &ferris)?;
 //!
 //!     let tux_file = File::open("examples/tux.cbor")?;
 //!     // Load Tux from a file.
 //!     // Serde CBOR performs roundtrip serialization meaning that
 //!     // the data will not change in any way.
-//!     let tux: Mascot = serde_cbor::from_reader(tux_file)?;
+//!     let tux: Mascot = serde_cbor_2::from_reader(tux_file)?;
 //!
 //!     println!("{:?}", tux);
 //!     // prints: Mascot { name: "Tux", species: "penguin", year_of_birth: 1996 }
@@ -61,7 +69,7 @@
 //! `serde::Deserialize` trait. Serde provides an annotation to automatically generate the
 //! code for these traits: `#[derive(Serialize, Deserialize)]`.
 //!
-//! The CBOR API also provides an enum `serde_cbor::Value`.
+//! The CBOR API also provides an enum `serde_cbor_2::Value`.
 //!
 //! # Packed Encoding
 //! When serializing structs or enums in CBOR the keys or enum variant names will be serialized
@@ -90,7 +98,7 @@
 //!
 //! ```rust
 //! use std::collections::BTreeMap;
-//! use serde_cbor::from_slice;
+//! use serde_cbor_2::from_slice;
 //!
 //! let slice = b"\xa5aaaAabaBacaCadaDaeaE";
 //! let value: BTreeMap<String, String> = from_slice(slice).unwrap();
@@ -100,8 +108,8 @@
 //! Read a general CBOR value with an unknown content.
 //!
 //! ```rust
-//! use serde_cbor::from_slice;
-//! use serde_cbor::value::Value;
+//! use serde_cbor_2::from_slice;
+//! use serde_cbor_2::value::Value;
 //!
 //! let slice = b"\x82\x01\xa1aaab";
 //! let value: Value = from_slice(slice).unwrap();
@@ -112,7 +120,7 @@
 //!
 //! ```rust
 //! use std::collections::BTreeMap;
-//! use serde_cbor::to_vec;
+//! use serde_cbor_2::to_vec;
 //!
 //! let mut programming_languages = BTreeMap::new();
 //! programming_languages.insert("rust", vec!["safe", "concurrent", "fast"]);
@@ -124,8 +132,8 @@
 //!
 //! Deserializing data in the middle of a slice
 //! ```
-//! # extern crate serde_cbor;
-//! use serde_cbor::Deserializer;
+//! # extern crate serde_cbor_2;
+//! use serde_cbor_2::Deserializer;
 //!
 //! # fn main() {
 //! let data: Vec<u8> = vec![
@@ -145,7 +153,7 @@
 //!
 //! ```rust
 //! use serde_derive::{Deserialize, Serialize};
-//! use serde_cbor::ser::to_vec_packed;
+//! use serde_cbor_2::ser::to_vec_packed;
 //! use WithTwoVariants::*;
 //!
 //! #[derive(Debug, Serialize, Deserialize)]
@@ -165,7 +173,7 @@
 //!
 //! ```rust
 //! use serde_derive::{Deserialize, Serialize};
-//! use serde_cbor::{Result, Serializer, ser::{self, IoWrite}};
+//! use serde_cbor_2::{Result, Serializer, ser::{self, IoWrite}};
 //! use WithTwoVariants::*;
 //!
 //! fn to_vec_minimal<T>(value: &T) -> Result<Vec<u8>>
@@ -215,10 +223,10 @@
 //! Serialize an object with `no_std` and without `alloc`.
 //! ``` rust
 //! # #[macro_use] extern crate serde_derive;
-//! # fn main() -> Result<(), serde_cbor::Error> {
+//! # fn main() -> Result<(), serde_cbor_2::Error> {
 //! use serde::Serialize;
-//! use serde_cbor::Serializer;
-//! use serde_cbor::ser::SliceWrite;
+//! use serde_cbor_2::Serializer;
+//! use serde_cbor_2::ser::SliceWrite;
 //!
 //! #[derive(Serialize)]
 //! struct User {
@@ -249,7 +257,7 @@
 //! Deserialize an object.
 //! ``` rust
 //! # #[macro_use] extern crate serde_derive;
-//! # fn main() -> Result<(), serde_cbor::Error> {
+//! # fn main() -> Result<(), serde_cbor_2::Error> {
 //! #[derive(Debug, PartialEq, Deserialize)]
 //! struct User {
 //!     user_id: u32,
@@ -266,7 +274,7 @@
 //! // borrow from somewhere else.
 //! // You will have to size your scratch according to the input data you
 //! // expect.
-//! use serde_cbor::de::from_slice_with_scratch;
+//! use serde_cbor_2::de::from_slice_with_scratch;
 //! let mut scratch = [0u8; 32];
 //! let user: User = from_slice_with_scratch(&value[..], &mut scratch)?;
 //! assert_eq!(user, User {
@@ -282,7 +290,7 @@
 //!
 //! // from_mut_slice will move data around the input slice, you may only use it
 //! // on data you may own or can modify.
-//! use serde_cbor::de::from_mut_slice;
+//! use serde_cbor_2::de::from_mut_slice;
 //! let user: User = from_mut_slice(&mut value[..])?;
 //! assert_eq!(user, User {
 //!     user_id: 42,

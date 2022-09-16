@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate serde_derive;
 
-use serde_cbor;
-use serde_cbor::de;
+use serde_cbor_2;
+use serde_cbor_2::de;
 
 #[test]
 fn test_str() {
@@ -48,8 +48,8 @@ mod std_tests {
     use std::collections::BTreeMap;
 
     use serde::de as serde_de;
-    use serde_cbor::value::Value;
-    use serde_cbor::{de, error, to_vec, Deserializer};
+    use serde_cbor_2::value::Value;
+    use serde_cbor_2::{de, error, to_vec, Deserializer};
 
     #[test]
     fn test_string1() {
@@ -292,7 +292,7 @@ mod std_tests {
         let obj1 = Some(10u32);
 
         let v = to_vec(&obj1).unwrap();
-        let obj2: Result<Option<u32>, _> = serde_cbor::de::from_reader(&v[..]);
+        let obj2: Result<Option<u32>, _> = serde_cbor_2::de::from_reader(&v[..]);
         println!("{:?}", obj2);
 
         assert_eq!(obj1, obj2.unwrap());
@@ -304,7 +304,7 @@ mod std_tests {
 
         let v = to_vec(&obj1).unwrap();
         println!("{:?}", v);
-        let obj2: Result<Option<u32>, _> = serde_cbor::de::from_reader(&v[..]);
+        let obj2: Result<Option<u32>, _> = serde_cbor_2::de::from_reader(&v[..]);
 
         assert_eq!(obj1, obj2.unwrap());
     }
@@ -383,7 +383,7 @@ mod std_tests {
         let value_result: error::Result<Value> = de::from_slice(file);
         assert_eq!(
             value_result.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
     }
 
@@ -522,13 +522,13 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_standard());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
         let value: error::Result<(&[u8], Enum)> =
             from_slice_stream_options(&v[..], Options::default().no_standard().no_legacy());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
         // Serialization of Enum::Unit
         let v: Vec<u8> = vec![
@@ -546,7 +546,7 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_legacy().no_standard());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
 
         // This is the format used in serde <= 0.9
@@ -562,7 +562,7 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_legacy());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
         let value: error::Result<(&[u8], Enum)> =
             from_slice_stream_options(&v[..], Options::default().no_standard());
@@ -571,7 +571,7 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_standard().no_legacy());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
     }
 
@@ -614,7 +614,7 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_named());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
 
         // unpacked - indefinite length
@@ -649,7 +649,7 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_named());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
 
         // packed
@@ -682,7 +682,7 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_packed());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
 
         // packed - indefinite length
@@ -716,11 +716,11 @@ mod std_tests {
             from_slice_stream_options(&v[..], Options::default().no_packed());
         assert_eq!(
             value.unwrap_err().classify(),
-            serde_cbor::error::Category::Syntax
+            serde_cbor_2::error::Category::Syntax
         );
     }
 
-    use serde_cbor::{de::from_slice, ser::to_vec_packed};
+    use serde_cbor_2::{de::from_slice, ser::to_vec_packed};
     use std::net::{IpAddr, Ipv4Addr};
     #[test]
     fn test_ipaddr_deserialization() {
@@ -741,7 +741,8 @@ mod std_tests {
         // This causes deep recursion in the decoder and may
         // exhaust the stack and therfore result in a stack overflow.
         let input = vec![0xd1; 1000];
-        let err = serde_cbor::from_slice::<serde_cbor::Value>(&input).expect_err("recursion limit");
+        let err =
+            serde_cbor_2::from_slice::<serde_cbor_2::Value>(&input).expect_err("recursion limit");
         assert!(err.is_syntax());
     }
 }

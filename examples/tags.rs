@@ -1,7 +1,7 @@
 use serde::de::{Deserialize, Deserializer};
 use serde::ser::{Serialize, Serializer};
-use serde_cbor::tags::Tagged;
-use serde_cbor::Value;
+use serde_cbor_2::tags::Tagged;
+use serde_cbor_2::Value;
 use serde_derive::{Deserialize, Serialize};
 use std::error::Error;
 
@@ -60,17 +60,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
 
     // serialize the struct to bytes
-    let bytes1 = serde_cbor::to_vec(&bookmark)?;
-    // deserialize to a serde_cbor::Value
-    let value1: Value = serde_cbor::from_slice(&bytes1)?;
+    let bytes1 = serde_cbor_2::to_vec(&bookmark)?;
+    // deserialize to a serde_cbor_2::Value
+    let value1: Value = serde_cbor_2::from_slice(&bytes1)?;
     println!("{:?}", value1);
     // serialize the value to bytes
-    let bytes2 = serde_cbor::to_vec(&value1)?;
-    // deserialize to a serde_cbor::Value
-    let value2: Value = serde_cbor::from_slice(&bytes2)?;
+    let bytes2 = serde_cbor_2::to_vec(&value1)?;
+    // deserialize to a serde_cbor_2::Value
+    let value2: Value = serde_cbor_2::from_slice(&bytes2)?;
     println!("{:?}", value2);
     // deserialize to a Bookmark
-    let result: Bookmark = serde_cbor::from_slice(&bytes2)?;
+    let result: Bookmark = serde_cbor_2::from_slice(&bytes2)?;
 
     // check that the roundtrip was successful
     assert_eq!(value1, value2);

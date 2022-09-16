@@ -24,13 +24,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Write Ferris to the given file.
     // Instead of a file you can use any type that implements `io::Write`
     // like a HTTP body, database connection etc.
-    serde_cbor::to_writer(ferris_file, &ferris)?;
+    serde_cbor_2::to_writer(ferris_file, &ferris)?;
 
     let tux_file = File::open("examples/tux.cbor")?;
     // Load Tux from a file.
     // Serde CBOR performs roundtrip serialization meaning that
     // the data will not change in any way.
-    let tux: Mascot = serde_cbor::from_reader(tux_file)?;
+    let tux: Mascot = serde_cbor_2::from_reader(tux_file)?;
 
     println!("{:?}", tux);
     // prints: Mascot { name: "Tux", species: "penguin", year_of_birth: 1996 }

@@ -3,7 +3,7 @@ extern crate serde_derive;
 
 #[cfg(feature = "std")]
 mod std_tests {
-    use serde_cbor;
+    use serde_cbor_2;
 
     use std::collections::BTreeMap;
 
@@ -23,7 +23,7 @@ mod std_tests {
         unit_array: Vec<UnitStruct>,
     }
 
-    use serde_cbor::value::Value;
+    use serde_cbor_2::value::Value;
     use std::iter::FromIterator;
 
     #[test]
@@ -57,11 +57,11 @@ mod std_tests {
             unit_array,
         };
 
-        let value = serde_cbor::value::to_value(data.clone()).unwrap();
+        let value = serde_cbor_2::value::to_value(data.clone()).unwrap();
         println!("{:?}", value);
 
-        let data_ser = serde_cbor::to_vec(&value).unwrap();
-        let data_de_value: Value = serde_cbor::from_slice(&data_ser).unwrap();
+        let data_ser = serde_cbor_2::to_vec(&value).unwrap();
+        let data_de_value: Value = serde_cbor_2::from_slice(&data_ser).unwrap();
 
         fn as_object(value: &Value) -> &BTreeMap<Value, Value> {
             if let Value::Map(ref v) = value {
@@ -93,7 +93,7 @@ mod std_tests {
         // Field names should not be serialized,
         // instead field indizes are serialized.
         let value = SmallStruct { spam: 17, eggs: 42 };
-        let data = serde_cbor::ser::to_vec_packed(&value).unwrap();
+        let data = serde_cbor_2::ser::to_vec_packed(&value).unwrap();
         let reference = b"\xa2\x00\x11\x01\x18\x2a";
         assert_eq!(data, reference);
     }

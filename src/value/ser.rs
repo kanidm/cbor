@@ -406,7 +406,7 @@ impl serde::ser::SerializeStructVariant for SerializeStructVariant {
     }
 }
 
-/// Convert a `T` into `serde_cbor::Value` which is an enum that can represent
+/// Convert a `T` into `serde_cbor_2::Value` which is an enum that can represent
 /// any valid CBOR data.
 ///
 /// ```rust
@@ -414,7 +414,7 @@ impl serde::ser::SerializeStructVariant for SerializeStructVariant {
 ///
 /// #[macro_use]
 /// extern crate serde_derive;
-/// extern crate serde_cbor;
+/// extern crate serde_cbor_2;
 ///
 /// use std::error::Error;
 ///
@@ -430,7 +430,7 @@ impl serde::ser::SerializeStructVariant for SerializeStructVariant {
 ///         location: "Menlo Park, CA".to_owned(),
 ///     };
 ///
-///     let v = serde_cbor::value::to_value(u).unwrap();
+///     let v = serde_cbor_2::value::to_value(u).unwrap();
 /// }
 /// ```
 #[allow(clippy::needless_pass_by_value)]

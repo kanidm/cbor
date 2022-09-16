@@ -1,5 +1,5 @@
 use serde::Serialize;
-use serde_cbor::ser::{Serializer, SliceWrite};
+use serde_cbor_2::ser::{Serializer, SliceWrite};
 
 #[test]
 fn test_str() {
@@ -44,8 +44,8 @@ fn serialize_and_compare<T: Serialize>(value: T, expected: &[u8]) {
 #[cfg(feature = "std")]
 mod std_tests {
     use serde::Serializer;
-    use serde_cbor::ser;
-    use serde_cbor::{from_slice, to_vec};
+    use serde_cbor_2::ser;
+    use serde_cbor_2::{from_slice, to_vec};
     use std::collections::BTreeMap;
 
     #[test]
@@ -82,7 +82,7 @@ mod std_tests {
         object.insert(vec![-2i64], ());
         object.insert(vec![0i64, 0i64], ());
         object.insert(vec![0i64, -1i64], ());
-        let vec = to_vec(&serde_cbor::value::to_value(object.clone()).unwrap()).unwrap();
+        let vec = to_vec(&serde_cbor_2::value::to_value(object.clone()).unwrap()).unwrap();
         assert_eq!(
             vec![
                 166, 129, 0, 246, 129, 24, 100, 246, 129, 32, 246, 129, 33, 246, 130, 0, 0, 246,
@@ -112,7 +112,7 @@ mod std_tests {
         for key in keys {
             object.insert(key, ());
         }
-        let vec = to_vec(&serde_cbor::value::to_value(object.clone()).unwrap()).unwrap();
+        let vec = to_vec(&serde_cbor_2::value::to_value(object.clone()).unwrap()).unwrap();
         assert_eq!(
             vec![
                 166, 161, 97, 97, 246, 246, 161, 97, 98, 246, 246, 161, 97, 99, 246, 246, 161, 97,
@@ -202,7 +202,7 @@ mod std_tests {
         // Very short byte strings have 1-byte headers
         let short = vec![0, 1, 2, 255];
         let mut short_s = Vec::new();
-        serde_cbor::Serializer::new(&mut short_s)
+        serde_cbor_2::Serializer::new(&mut short_s)
             .serialize_bytes(&short)
             .unwrap();
         assert_eq!(&short_s[..], [0x44, 0, 1, 2, 255]);
@@ -212,7 +212,7 @@ mod std_tests {
             0u8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 255,
         ];
         let mut medium_s = Vec::new();
-        serde_cbor::Serializer::new(&mut medium_s)
+        serde_cbor_2::Serializer::new(&mut medium_s)
             .serialize_bytes(&medium)
             .unwrap();
         assert_eq!(
@@ -226,7 +226,7 @@ mod std_tests {
         // byte strings > 256 bytes have 3-byte headers
         let long_vec = (0..256).map(|i| (i & 0xFF) as u8).collect::<Vec<_>>();
         let mut long_s = Vec::new();
-        serde_cbor::Serializer::new(&mut long_s)
+        serde_cbor_2::Serializer::new(&mut long_s)
             .serialize_bytes(&long_vec)
             .unwrap();
         assert_eq!(&long_s[0..3], [0x59, 1, 0]);
@@ -235,7 +235,7 @@ mod std_tests {
         // byte strings > 2^16 bytes have 5-byte headers
         let very_long_vec = (0..65536).map(|i| (i & 0xFF) as u8).collect::<Vec<_>>();
         let mut very_long_s = Vec::new();
-        serde_cbor::Serializer::new(&mut very_long_s)
+        serde_cbor_2::Serializer::new(&mut very_long_s)
             .serialize_bytes(&very_long_vec)
             .unwrap();
         assert_eq!(&very_long_s[0..5], [0x5a, 0, 1, 0, 0]);

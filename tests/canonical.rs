@@ -1,6 +1,6 @@
 #[cfg(feature = "std")]
 mod std_tests {
-    use serde_cbor::value::Value;
+    use serde_cbor_2::value::Value;
 
     #[test]
     fn integer_canonical_sort_order() {

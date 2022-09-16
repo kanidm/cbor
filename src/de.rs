@@ -29,7 +29,7 @@ use crate::tags::set_tag;
 /// Deserialize a `String`
 ///
 /// ```
-/// # use serde_cbor::de;
+/// # use serde_cbor_2::de;
 /// let v: Vec<u8> = vec![0x66, 0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72];
 /// let value: String = de::from_slice(&v[..]).unwrap();
 /// assert_eq!(value, "foobar");
@@ -38,7 +38,7 @@ use crate::tags::set_tag;
 /// Deserialize a borrowed string with zero copies.
 ///
 /// ```
-/// # use serde_cbor::de;
+/// # use serde_cbor_2::de;
 /// let v: Vec<u8> = vec![0x66, 0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72];
 /// let value: &str = de::from_slice(&v[..]).unwrap();
 /// assert_eq!(value, "foobar");
@@ -98,7 +98,7 @@ where
 /// Deserialize a `String`
 ///
 /// ```
-/// # use serde_cbor::de;
+/// # use serde_cbor_2::de;
 /// let v: Vec<u8> = vec![0x66, 0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72];
 /// let value: String = de::from_reader(&v[..]).unwrap();
 /// assert_eq!(value, "foobar");
@@ -107,7 +107,7 @@ where
 /// Note that `from_reader` cannot borrow data:
 ///
 /// ```compile_fail
-/// # use serde_cbor::de;
+/// # use serde_cbor_2::de;
 /// let v: Vec<u8> = vec![0x66, 0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72];
 /// let value: &str = de::from_reader(&v[..]).unwrap();
 /// assert_eq!(value, "foobar");
@@ -180,7 +180,7 @@ impl<'de, R> Deserializer<R>
 where
     R: Read<'de>,
 {
-    /// Constructs a `Deserializer` from one of the possible serde_cbor input sources.
+    /// Constructs a `Deserializer` from one of the possible serde_cbor_2 input sources.
     ///
     /// `from_slice` and `from_reader` should normally be used instead of this method.
     pub fn new(read: R) -> Self {
@@ -206,13 +206,13 @@ where
         self
     }
 
-    /// Don't accept the new enum format used by `serde_cbor` versions >= v0.10.
+    /// Don't accept the new enum format used by `serde_cbor_2` versions >= v0.10.
     pub fn disable_standard_enums(mut self) -> Self {
         self.accept_standard_enums = false;
         self
     }
 
-    /// Don't accept the old enum format used by `serde_cbor` versions <= v0.9.
+    /// Don't accept the old enum format used by `serde_cbor_2` versions <= v0.9.
     pub fn disable_legacy_enums(mut self) -> Self {
         self.accept_legacy_enums = false;
         self
@@ -1223,9 +1223,9 @@ where
 /// `Deserializer::into_iter` method.
 ///
 /// ```
-/// # extern crate serde_cbor;
-/// use serde_cbor::de::Deserializer;
-/// use serde_cbor::value::Value;
+/// # extern crate serde_cbor_2;
+/// use serde_cbor_2::de::Deserializer;
+/// use serde_cbor_2::value::Value;
 ///
 /// # fn main() {
 /// let data: Vec<u8> = vec![
@@ -1255,7 +1255,7 @@ where
     T: de::Deserialize<'de>,
 {
     /// Create a new CBOR stream deserializer from one of the possible
-    /// serde_cbor input sources.
+    /// serde_cbor_2 input sources.
     ///
     /// Typically it is more convenient to use one of these methods instead:
     ///

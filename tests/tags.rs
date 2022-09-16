@@ -1,7 +1,7 @@
 #[cfg(feature = "tags")]
 mod tagtests {
-    use serde_cbor::value::Value;
-    use serde_cbor::{from_slice, to_vec};
+    use serde_cbor_2::value::Value;
+    use serde_cbor_2::{from_slice, to_vec};
 
     fn decode_hex(s: &str) -> std::result::Result<Vec<u8>, std::num::ParseIntError> {
         (0..s.len())
