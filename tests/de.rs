@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate serde_derive;
 
-use serde_cbor_2;
 use serde_cbor_2::de;
 
 #[test]

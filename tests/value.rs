@@ -3,8 +3,6 @@ extern crate serde_derive;
 
 #[cfg(feature = "std")]
 mod std_tests {
-    use serde_cbor_2;
-
     use std::collections::BTreeMap;
 
     #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
@@ -28,16 +26,16 @@ mod std_tests {
 
     #[test]
     fn serde() {
-        let tuple_struct = TupleStruct(format!("test"), -60, 3000);
+        let tuple_struct = TupleStruct("test".to_owned(), -60, 3000);
 
-        let tuple = (format!("hello"), -50.0040957, -12.094635556478);
+        let tuple = ("hello".to_owned(), -50.004_097, -12.094635556478);
 
         let map = BTreeMap::from_iter(
             [
-                (format!("key1"), format!("value1")),
-                (format!("key2"), format!("value2")),
-                (format!("key3"), format!("value3")),
-                (format!("key4"), format!("value4")),
+                ("key1".to_owned(), "value1".to_owned()),
+                ("key2".to_owned(), "value2".to_owned()),
+                ("key3".to_owned(), "value3".to_owned()),
+                ("key4".to_owned(), "value4".to_owned()),
             ]
             .iter()
             .cloned(),

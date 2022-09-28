@@ -1,5 +1,4 @@
 use serde::Serialize;
-use serde_cbor_2;
 use serde_cbor_2::ser::{Serializer, SliceWrite};
 
 #[macro_use]

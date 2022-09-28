@@ -8,7 +8,7 @@ fn test_str() {
 
 #[test]
 fn test_list() {
-    serialize_and_compare(&[1, 2, 3], b"\x83\x01\x02\x03");
+    serialize_and_compare([1, 2, 3], b"\x83\x01\x02\x03");
 }
 
 #[test]

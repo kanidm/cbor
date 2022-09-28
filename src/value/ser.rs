@@ -22,8 +22,8 @@ impl serde::Serialize for Value {
     {
         match *self {
             Value::Integer(v) => serializer.serialize_i128(v),
-            Value::Bytes(ref v) => serializer.serialize_bytes(&v),
-            Value::Text(ref v) => serializer.serialize_str(&v),
+            Value::Bytes(ref v) => serializer.serialize_bytes(v),
+            Value::Text(ref v) => serializer.serialize_str(v),
             Value::Array(ref v) => v.serialize(serializer),
             Value::Map(ref v) => v.serialize(serializer),
             Value::Tag(tag, ref v) => Tagged::new(Some(tag), v).serialize(serializer),
@@ -167,7 +167,7 @@ impl serde::Serializer for Serializer {
         T: Serialize,
     {
         let mut values = BTreeMap::new();
-        values.insert(Value::from(variant.to_owned()), to_value(&value)?);
+        values.insert(Value::from(variant.to_owned()), to_value(value)?);
         Ok(Value::Map(values))
     }
 
@@ -276,7 +276,7 @@ impl serde::ser::SerializeSeq for SerializeVec {
     where
         T: Serialize,
     {
-        self.vec.push(to_value(&value)?);
+        self.vec.push(to_value(value)?);
         Ok(())
     }
 
@@ -325,7 +325,7 @@ impl serde::ser::SerializeTupleVariant for SerializeTupleVariant {
     where
         T: Serialize,
     {
-        self.vec.push(to_value(&value)?);
+        self.vec.push(to_value(value)?);
         Ok(())
     }
 
@@ -346,7 +346,7 @@ impl serde::ser::SerializeMap for SerializeMap {
     where
         T: Serialize,
     {
-        self.next_key = Some(to_value(&key)?);
+        self.next_key = Some(to_value(key)?);
         Ok(())
     }
 
@@ -358,7 +358,7 @@ impl serde::ser::SerializeMap for SerializeMap {
         // Panic because this indicates a bug in the program rather than an
         // expected failure.
         let key = key.expect("serialize_value called before serialize_key");
-        self.map.insert(key, to_value(&value)?);
+        self.map.insert(key, to_value(value)?);
         Ok(())
     }
 
@@ -393,7 +393,7 @@ impl serde::ser::SerializeStructVariant for SerializeStructVariant {
         T: Serialize,
     {
         self.map
-            .insert(Value::from(String::from(key)), to_value(&value)?);
+            .insert(Value::from(String::from(key)), to_value(value)?);
         Ok(())
     }
 
