@@ -13,11 +13,11 @@ mod tagtests {
     // get bytes from http://cbor.me/ trees
     fn parse_cbor_me(example: &str) -> std::result::Result<Vec<u8>, std::num::ParseIntError> {
         let hex = example
-            .split("\n")
-            .flat_map(|line| line.split("#").take(1))
+            .split('\n')
+            .flat_map(|line| line.split('#').take(1))
             .collect::<Vec<&str>>()
             .join("")
-            .replace(" ", "");
+            .replace(' ', "");
         decode_hex(&hex)
     }
 
@@ -38,7 +38,7 @@ C1                   # tag(1)
                61    # text(1)
                   62 # "b"
             "#;
-        let bytes1 = parse_cbor_me(&data).unwrap();
+        let bytes1 = parse_cbor_me(data).unwrap();
         let value1: Value = from_slice(&bytes1).unwrap();
         let bytes2 = to_vec(&value1).unwrap();
         let value2: Value = from_slice(&bytes2).unwrap();

@@ -137,13 +137,8 @@ impl Value {
         match self {
             Null => 7,
             Bool(_) => 7,
-            Integer(v) => {
-                if *v >= 0 {
-                    0
-                } else {
-                    1
-                }
-            }
+            Integer(v) if *v < 0 => 1,
+            Integer(_) => 0,
             Tag(_, _) => 6,
             Float(_) => 7,
             Bytes(_) => 2,
