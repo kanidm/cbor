@@ -24,7 +24,7 @@ jobs:
       - run: cargo generate-lockfile
       - name: Cache Dependencies
         uses: Swatinem/rust-cache@v1.2.0
-  
+
       - name: Check with Clippy
         uses: actions-rs/clippy-check@v1
         with:
@@ -42,7 +42,7 @@ jobs:
       - name: Check for broken intra-doc links
         uses: actions-rs/cargo@v1
         env:
-          RUSTDOCFLAGS: "-D warnings"
+          RUSTDOCFLAGS: '-D warnings'
         with:
           command: doc
           args: --no-deps --all-features --workspace

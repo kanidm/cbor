@@ -1,10 +1,8 @@
-#[macro_use]
-extern crate serde_derive;
-
 #[cfg(feature = "std")]
 mod std_tests {
     use std::u8;
 
+    use serde::{Deserialize, Serialize};
     use serde_cbor_2::de::from_mut_slice;
     use serde_cbor_2::ser::{to_vec, to_vec_packed};
     use serde_cbor_2::{from_reader, from_slice};

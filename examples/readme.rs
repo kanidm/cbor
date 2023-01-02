@@ -1,8 +1,7 @@
 // NOTE: This file should be kept in sync with README.md
 
-use serde_derive::{Deserialize, Serialize};
-use std::error::Error;
-use std::fs::File;
+use serde::{Deserialize, Serialize};
+use std::{error::Error, fs::File};
 
 // Types annotated with `Serialize` can be stored as CBOR.
 // To be able to load them again add `Deserialize`.

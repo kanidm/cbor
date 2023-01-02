@@ -1223,7 +1223,6 @@ where
 /// `Deserializer::into_iter` method.
 ///
 /// ```
-/// # extern crate serde_cbor_2;
 /// use serde_cbor_2::de::Deserializer;
 /// use serde_cbor_2::value::Value;
 ///

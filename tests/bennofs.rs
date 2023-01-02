@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate serde_derive;
+extern crate serde;
 
 use serde::Serialize;
 use serde_cbor_2::ser::SliceWrite;

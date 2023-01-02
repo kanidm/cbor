@@ -1,8 +1,5 @@
-use serde::de::{Deserialize, Deserializer};
-use serde::ser::{Serialize, Serializer};
-use serde_cbor_2::tags::Tagged;
-use serde_cbor_2::Value;
-use serde_derive::{Deserialize, Serialize};
+use serde::{de::Deserializer, ser::Serializer, Deserialize, Serialize};
+use serde_cbor_2::{tags::Tagged, Value};
 use std::error::Error;
 
 /// https://tools.ietf.org/html/rfc7049#section-2.4.1

@@ -20,7 +20,7 @@
 //! minimal modifications to the program code.
 //!
 //! ```rust
-//! use serde_derive::{Deserialize, Serialize};
+//! # use serde::{Deserialize, Serialize};
 //! use std::error::Error;
 //! use std::fs::File;
 //!
@@ -132,7 +132,6 @@
 //!
 //! Deserializing data in the middle of a slice
 //! ```
-//! # extern crate serde_cbor_2;
 //! use serde_cbor_2::Deserializer;
 //!
 //! # fn main() {
@@ -152,15 +151,16 @@
 //! Serialize using packed encoding
 //!
 //! ```rust
-//! use serde_derive::{Deserialize, Serialize};
+//! # use serde::{Deserialize, Serialize};
 //! use serde_cbor_2::ser::to_vec_packed;
-//! use WithTwoVariants::*;
 //!
 //! #[derive(Debug, Serialize, Deserialize)]
 //! enum WithTwoVariants {
 //!     FirstVariant,
 //!     SecondVariant(u8),
 //! }
+//!
+//! use WithTwoVariants::*;
 //!
 //! let cbor = to_vec_packed(&FirstVariant).unwrap();
 //! assert_eq!(cbor.len(), 1);
@@ -172,9 +172,8 @@
 //! Serialize using minimal encoding
 //!
 //! ```rust
-//! use serde_derive::{Deserialize, Serialize};
+//! # use serde::{Deserialize, Serialize};
 //! use serde_cbor_2::{Result, Serializer, ser::{self, IoWrite}};
-//! use WithTwoVariants::*;
 //!
 //! fn to_vec_minimal<T>(value: &T) -> Result<Vec<u8>>
 //! where
@@ -190,6 +189,8 @@
 //!     FirstVariant,
 //!     SecondVariant(u8),
 //! }
+//!
+//! use WithTwoVariants::*;
 //!
 //! let cbor = to_vec_minimal(&FirstVariant).unwrap();
 //! assert_eq!(cbor.len(), 1);
@@ -222,9 +223,8 @@
 //!
 //! Serialize an object with `no_std` and without `alloc`.
 //! ``` rust
-//! # #[macro_use] extern crate serde_derive;
 //! # fn main() -> Result<(), serde_cbor_2::Error> {
-//! use serde::Serialize;
+//! # use serde::Serialize;
 //! use serde_cbor_2::Serializer;
 //! use serde_cbor_2::ser::SliceWrite;
 //!
@@ -256,7 +256,7 @@
 //!
 //! Deserialize an object.
 //! ``` rust
-//! # #[macro_use] extern crate serde_derive;
+//! # use serde::Deserialize;
 //! # fn main() -> Result<(), serde_cbor_2::Error> {
 //! #[derive(Debug, PartialEq, Deserialize)]
 //! struct User {
