@@ -2,7 +2,7 @@ use serde::Serialize;
 use serde_cbor_2::ser::{Serializer, SliceWrite};
 
 #[macro_use]
-extern crate serde_derive;
+extern crate serde;
 
 #[test]
 fn test_simple_data_enum_roundtrip() {

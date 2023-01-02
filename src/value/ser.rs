@@ -410,28 +410,19 @@ impl serde::ser::SerializeStructVariant for SerializeStructVariant {
 /// any valid CBOR data.
 ///
 /// ```rust
-/// extern crate serde;
-///
-/// #[macro_use]
-/// extern crate serde_derive;
-/// extern crate serde_cbor_2;
-///
-/// use std::error::Error;
-///
+/// # use serde::Serialize;
 /// #[derive(Serialize)]
 /// struct User {
 ///     fingerprint: String,
 ///     location: String,
 /// }
 ///
-/// fn main() {
-///     let u = User {
-///         fingerprint: "0xF9BA143B95FF6D82".to_owned(),
-///         location: "Menlo Park, CA".to_owned(),
-///     };
+/// let u = User {
+///     fingerprint: "0xF9BA143B95FF6D82".to_owned(),
+///     location: "Menlo Park, CA".to_owned(),
+/// };
 ///
-///     let v = serde_cbor_2::value::to_value(u).unwrap();
-/// }
+/// let v = serde_cbor_2::value::to_value(u).unwrap();
 /// ```
 #[allow(clippy::needless_pass_by_value)]
 // Taking by value is more friendly to iterator adapters, option and result

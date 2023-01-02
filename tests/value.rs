@@ -1,9 +1,8 @@
-#[macro_use]
-extern crate serde_derive;
-
 #[cfg(feature = "std")]
 mod std_tests {
     use std::collections::BTreeMap;
+
+    use serde::{Deserialize, Serialize};
 
     #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
     struct TupleStruct(String, i32, u64);
