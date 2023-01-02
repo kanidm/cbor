@@ -8,7 +8,7 @@ fn test_str() {
 
 #[test]
 fn test_list() {
-    serialize_and_compare(&[1, 2, 3], b"\x83\x01\x02\x03");
+    serialize_and_compare([1, 2, 3], b"\x83\x01\x02\x03");
 }
 
 #[test]
@@ -190,7 +190,7 @@ mod std_tests {
 
         let addr = Ipv4Addr::new(8, 8, 8, 8);
         let vec = to_vec(&addr).unwrap();
-        println!("{:?}", vec);
+        println!("{vec:?}");
         assert_eq!(vec.len(), 5);
         let test_addr: Ipv4Addr = from_slice(&vec).unwrap();
         assert_eq!(addr, test_addr);

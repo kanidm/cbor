@@ -39,7 +39,7 @@ mod std_tests {
     #[test]
     fn test() {
         let serialized = serde_cbor_2::ser::to_vec_packed(&EXAMPLE).expect("bennofs 1");
-        println!("{:?}", serialized);
+        println!("{serialized:?}");
         let deserialized: Example = serde_cbor_2::from_slice(&serialized).expect("bennofs 2");
         assert_eq!(EXAMPLE, deserialized);
     }

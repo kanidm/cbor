@@ -327,7 +327,7 @@ where
         }
     }
 
-    fn convert_str<'a>(buf: &'a [u8], buf_end_offset: u64) -> Result<&'a str> {
+    fn convert_str(buf: &[u8], buf_end_offset: u64) -> Result<&str> {
         match str::from_utf8(buf) {
             Ok(s) => Ok(s),
             Err(e) => {
@@ -569,11 +569,11 @@ where
     }
 
     fn parse_f32(&mut self) -> Result<f32> {
-        self.parse_u32().map(|i| f32::from_bits(i))
+        self.parse_u32().map(f32::from_bits)
     }
 
     fn parse_f64(&mut self) -> Result<f64> {
-        self.parse_u64().map(|i| f64::from_bits(i))
+        self.parse_u64().map(f64::from_bits)
     }
 
     // Don't warn about the `unreachable!` in case

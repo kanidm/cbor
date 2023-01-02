@@ -1,5 +1,4 @@
 use serde::Serialize;
-use serde_cbor_2;
 use serde_cbor_2::ser::{Serializer, SliceWrite};
 
 #[macro_use]
@@ -59,7 +58,7 @@ mod std_tests {
     fn test_enum() {
         let enum_struct = EnumStruct { e: Enum::B };
         let raw = &to_vec(&enum_struct).unwrap();
-        println!("raw enum {:?}", raw);
+        println!("raw enum {raw:?}");
         let re: EnumStruct = from_slice(raw).unwrap();
         assert_eq!(enum_struct, re);
     }

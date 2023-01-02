@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate serde_derive;
 
-use serde_cbor_2;
 use serde_cbor_2::de;
 
 #[test]
@@ -293,7 +292,7 @@ mod std_tests {
 
         let v = to_vec(&obj1).unwrap();
         let obj2: Result<Option<u32>, _> = serde_cbor_2::de::from_reader(&v[..]);
-        println!("{:?}", obj2);
+        println!("{obj2:?}");
 
         assert_eq!(obj1, obj2.unwrap());
     }
@@ -303,7 +302,7 @@ mod std_tests {
         let obj1 = None;
 
         let v = to_vec(&obj1).unwrap();
-        println!("{:?}", v);
+        println!("{v:?}");
         let obj2: Result<Option<u32>, _> = serde_cbor_2::de::from_reader(&v[..]);
 
         assert_eq!(obj1, obj2.unwrap());

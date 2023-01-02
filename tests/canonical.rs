@@ -49,7 +49,7 @@ mod std_tests {
     fn bytes_canonical_sort_order() {
         let expected = vec![vec![], vec![0u8], vec![1u8], vec![0u8, 0u8]]
             .into_iter()
-            .map(|v| Value::Bytes(v))
+            .map(Value::Bytes)
             .collect::<Vec<_>>();
 
         let mut sorted = expected.clone();

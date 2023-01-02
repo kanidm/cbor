@@ -18,7 +18,7 @@ edition = "2018"
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-half = "1.2.0"
+half = { version = "2", default-features = false }
 serde = { version = "1.0.14", default-features = false }
 
 [dev-dependencies]
