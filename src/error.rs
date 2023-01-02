@@ -210,9 +210,9 @@ impl de::Error for Error {
 
     fn invalid_type(unexp: de::Unexpected<'_>, exp: &dyn de::Expected) -> Error {
         if let de::Unexpected::Unit = unexp {
-            Error::custom(format_args!("invalid type: null, expected {}", exp))
+            Error::custom(format_args!("invalid type: null, expected {exp}"))
         } else {
-            Error::custom(format_args!("invalid type: {}, expected {}", unexp, exp))
+            Error::custom(format_args!("invalid type: {unexp}, expected {exp}"))
         }
     }
 }

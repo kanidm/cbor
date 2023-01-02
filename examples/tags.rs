@@ -63,12 +63,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     let bytes1 = serde_cbor_2::to_vec(&bookmark)?;
     // deserialize to a serde_cbor_2::Value
     let value1: Value = serde_cbor_2::from_slice(&bytes1)?;
-    println!("{:?}", value1);
+    println!("{value1:?}");
     // serialize the value to bytes
     let bytes2 = serde_cbor_2::to_vec(&value1)?;
     // deserialize to a serde_cbor_2::Value
     let value2: Value = serde_cbor_2::from_slice(&bytes2)?;
-    println!("{:?}", value2);
+    println!("{value2:?}");
     // deserialize to a Bookmark
     let result: Bookmark = serde_cbor_2::from_slice(&bytes2)?;
 

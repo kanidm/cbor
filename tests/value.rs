@@ -56,7 +56,7 @@ mod std_tests {
         };
 
         let value = serde_cbor_2::value::to_value(data.clone()).unwrap();
-        println!("{:?}", value);
+        println!("{value:?}");
 
         let data_ser = serde_cbor_2::to_vec(&value).unwrap();
         let data_de_value: Value = serde_cbor_2::from_slice(&data_ser).unwrap();

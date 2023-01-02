@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // the data will not change in any way.
     let tux: Mascot = serde_cbor_2::from_reader(tux_file)?;
 
-    println!("{:?}", tux);
+    println!("{tux:?}");
     // prints: Mascot { name: "Tux", species: "penguin", year_of_birth: 1996 }
 
     Ok(())
