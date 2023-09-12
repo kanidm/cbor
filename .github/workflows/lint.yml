@@ -9,40 +9,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@nightly
-        with: { components: rustfmt }
-      - run: cargo fmt --all -- --check
+
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.5.0
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - name: Check with Rustfmt
+        run: cargo fmt --all -- --check
 
   clippy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@stable
-        with: { components: clippy }
-
-      - run: cargo generate-lockfile
-      - name: Cache Dependencies
-        uses: Swatinem/rust-cache@v1.2.0
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.5.0
+        with:
+          components: clippy
 
       - name: Check with Clippy
-        uses: actions-rs/clippy-check@v1
+        uses: giraffate/clippy-action@v1
         with:
-          args: --workspace --tests --examples --all-features
-          token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clippy_flags: --workspace --all-features --tests --examples --bins -- -Dclippy::todo -Aunknown_lints
 
   lint-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@stable
-        with: { components: rust-docs }
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.5.0
+        with:
+          components: rust-docs
 
       - name: Check for broken intra-doc links
-        uses: actions-rs/cargo@v1
         env:
-          RUSTDOCFLAGS: '-D warnings'
-        with:
-          command: doc
-          args: --no-deps --all-features --workspace
+          RUSTDOCFLAGS: -Dwarnings
+        run: cargo doc --no-deps --all-features --workspace

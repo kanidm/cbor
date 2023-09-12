@@ -11,7 +11,8 @@ license = "MIT/Apache-2.0"
 description = "CBOR support for Serde."
 keywords = ["serde", "cbor", "serialization", "no_std"]
 categories = ["encoding"]
-edition = "2018"
+edition = "2021"
+rust-version = "1.70"
 
 [badges]
 maintenance = { status = "actively-developed" }
@@ -27,7 +28,7 @@ tags = []
 
 [dependencies]
 half = { version = "2", default-features = false }
-serde = { version = "1.0.14", default-features = false }
+serde = { version = "1", default-features = false }
 
 [dev-dependencies]
-serde = { version = "1.0.14", default-features = false, features = ["derive"] }
+serde = { version = "1", default-features = false, features = ["derive"] }
