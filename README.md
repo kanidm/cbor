@@ -10,7 +10,7 @@ CBOR provides a binary encoding for a superset of the JSON data model that is sm
 
 ## Usage
 
-Serde CBOR supports Rust 1.40 and up. Add this to your `Cargo.toml`:
+Serde CBOR supports Rust 1.70 and up. Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
