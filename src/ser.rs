@@ -150,7 +150,7 @@ where
 
     #[inline]
     fn write_u16(&mut self, major: u8, value: u16) -> Result<()> {
-        if value <= u16::from(u8::max_value()) {
+        if value <= u16::from(u8::MAX) {
             self.write_u8(major, value as u8)
         } else {
             let mut buf = [major << 5 | 25, 0, 0];
@@ -161,7 +161,7 @@ where
 
     #[inline]
     fn write_u32(&mut self, major: u8, value: u32) -> Result<()> {
-        if value <= u32::from(u16::max_value()) {
+        if value <= u32::from(u16::MAX) {
             self.write_u16(major, value as u16)
         } else {
             let mut buf = [major << 5 | 26, 0, 0, 0, 0];
@@ -172,7 +172,7 @@ where
 
     #[inline]
     fn write_u64(&mut self, major: u8, value: u64) -> Result<()> {
-        if value <= u64::from(u32::max_value()) {
+        if value <= u64::from(u32::MAX) {
             self.write_u32(major, value as u32)
         } else {
             let mut buf = [major << 5 | 27, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -267,12 +267,12 @@ where
     #[inline]
     fn serialize_i128(self, value: i128) -> Result<()> {
         if value < 0 {
-            if -(value + 1) > i128::from(u64::max_value()) {
+            if -(value + 1) > i128::from(u64::MAX) {
                 return Err(Error::message("The number can't be stored in CBOR"));
             }
             self.write_u64(1, -(value + 1) as u64)
         } else {
-            if value > i128::from(u64::max_value()) {
+            if value > i128::from(u64::MAX) {
                 return Err(Error::message("The number can't be stored in CBOR"));
             }
             self.write_u64(0, value as u64)
@@ -301,7 +301,7 @@ where
 
     #[inline]
     fn serialize_u128(self, value: u128) -> Result<()> {
-        if value > u128::from(u64::max_value()) {
+        if value > u128::from(u64::MAX) {
             return Err(Error::message("The number can't be stored in CBOR"));
         }
         self.write_u64(0, value as u64)

@@ -260,7 +260,7 @@ mod std_tests {
                 Value::Null,
                 Value::Null,
                 Value::Float(23456543.5),
-                Value::Float(::std::f64::INFINITY)
+                Value::Float(f64::INFINITY)
             ]
         );
     }
