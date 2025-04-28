@@ -27,7 +27,7 @@ fn test_integer() {
     // i32
     serialize_and_compare(-23567997, b"\x3a\x01\x67\x9e\x7c");
     // u64
-    serialize_and_compare(::core::u64::MAX, b"\x1b\xff\xff\xff\xff\xff\xff\xff\xff");
+    serialize_and_compare(u64::MAX, b"\x1b\xff\xff\xff\xff\xff\xff\xff\xff");
 }
 
 fn serialize_and_compare<T: Serialize>(value: T, expected: &[u8]) {
@@ -138,19 +138,19 @@ mod std_tests {
 
     #[test]
     fn test_infinity() {
-        let vec = to_vec(&::std::f64::INFINITY).unwrap();
+        let vec = to_vec(&f64::INFINITY).unwrap();
         assert_eq!(vec, b"\xf9|\x00");
     }
 
     #[test]
     fn test_neg_infinity() {
-        let vec = to_vec(&::std::f64::NEG_INFINITY).unwrap();
+        let vec = to_vec(&f64::NEG_INFINITY).unwrap();
         assert_eq!(vec, b"\xf9\xfc\x00");
     }
 
     #[test]
     fn test_nan() {
-        let vec = to_vec(&::std::f32::NAN).unwrap();
+        let vec = to_vec(&f32::NAN).unwrap();
         assert_eq!(vec, b"\xf9\x7e\x00");
     }
 
@@ -169,7 +169,7 @@ mod std_tests {
         let vec = to_vec(&-23567997).unwrap();
         assert_eq!(vec, b"\x3a\x01\x67\x9e\x7c");
         // u64
-        let vec = to_vec(&::std::u64::MAX).unwrap();
+        let vec = to_vec(&u64::MAX).unwrap();
         assert_eq!(vec, b"\x1b\xff\xff\xff\xff\xff\xff\xff\xff");
     }
 

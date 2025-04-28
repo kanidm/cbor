@@ -1,6 +1,5 @@
 #[cfg(feature = "std")]
 mod std_tests {
-    use std::u8;
 
     use serde::{Deserialize, Serialize};
     use serde_cbor_2::de::from_mut_slice;
@@ -89,9 +88,9 @@ mod std_tests {
     testcase!(test_u32_98745874, u32, 98745874, "1a05e2be12");
     testcase!(test_f32_1234_point_5, f32, 1234.5, "fa449a5000");
     testcase!(test_f64_12345_point_6, f64, 12345.6, "fb40c81ccccccccccd");
-    testcase!(test_f64_nan, f64, ::std::f64::NAN, "f97e00");
-    testcase!(test_f64_infinity, f64, ::std::f64::INFINITY, "f97c00");
-    testcase!(test_f64_neg_infinity, f64, -::std::f64::INFINITY, "f9fc00");
+    testcase!(test_f64_nan, f64, f64::NAN, "f97e00");
+    testcase!(test_f64_infinity, f64, f64::INFINITY, "f97c00");
+    testcase!(test_f64_neg_infinity, f64, -f64::INFINITY, "f9fc00");
     testcase!(test_char_null, char, '\x00', "6100");
     testcase!(test_char_broken_heart, char, '💔', "64f09f9294");
     testcase!(

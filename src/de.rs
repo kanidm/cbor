@@ -309,7 +309,7 @@ where
                 0x5a => self.parse_u32()? as usize,
                 0x5b => {
                     let len = self.parse_u64()?;
-                    if len > usize::max_value() as u64 {
+                    if len > usize::MAX as u64 {
                         return Err(self.error(ErrorCode::LengthOutOfRange));
                     }
                     len as usize
@@ -376,7 +376,7 @@ where
                 0x7a => self.parse_u32()? as usize,
                 0x7b => {
                     let len = self.parse_u64()?;
-                    if len > usize::max_value() as u64 {
+                    if len > usize::MAX as u64 {
                         return Err(self.error(ErrorCode::LengthOutOfRange));
                     }
                     len as usize
@@ -621,7 +621,7 @@ where
             }
             0x3b => {
                 let value = self.parse_u64()?;
-                if value > i64::max_value() as u64 {
+                if value > i64::MAX as u64 {
                     return visitor.visit_i128(-1 - i128::from(value));
                 }
                 visitor.visit_i64(-1 - value as i64)
@@ -644,7 +644,7 @@ where
             }
             0x5b => {
                 let len = self.parse_u64()?;
-                if len > usize::max_value() as u64 {
+                if len > usize::MAX as u64 {
                     return Err(self.error(ErrorCode::LengthOutOfRange));
                 }
                 self.parse_bytes(len as usize, visitor)
@@ -668,7 +668,7 @@ where
             }
             0x7b => {
                 let len = self.parse_u64()?;
-                if len > usize::max_value() as u64 {
+                if len > usize::MAX as u64 {
                     return Err(self.error(ErrorCode::LengthOutOfRange));
                 }
                 self.parse_str(len as usize, visitor)
@@ -692,7 +692,7 @@ where
             }
             0x9b => {
                 let len = self.parse_u64()?;
-                if len > usize::max_value() as u64 {
+                if len > usize::MAX as u64 {
                     return Err(self.error(ErrorCode::LengthOutOfRange));
                 }
                 self.parse_array(len as usize, visitor)
@@ -716,7 +716,7 @@ where
             }
             0xbb => {
                 let len = self.parse_u64()?;
-                if len > usize::max_value() as u64 {
+                if len > usize::MAX as u64 {
                     return Err(self.error(ErrorCode::LengthOutOfRange));
                 }
                 self.parse_map(len as usize, visitor)
@@ -845,7 +845,7 @@ where
                     }
                     0x9b => {
                         let len = self.parse_u64()?;
-                        if len > usize::max_value() as u64 {
+                        if len > usize::MAX as u64 {
                             return Err(self.error(ErrorCode::LengthOutOfRange));
                         }
                         self.parse_enum(len as usize, visitor)
