@@ -3,8 +3,7 @@ name = "serde_cbor_2"
 version = "0.12.0-dev"
 authors = [
     "William Brown <william@blackhats.net.au>",
-    "(Former) Pyfisch <pyfisch@posteo.org>",
-    "(Former) Steven Fackler <sfackler@gmail.com>",
+    "James Hodgkinson <james@terminaloutcomes.com>",
 ]
 repository = "https://github.com/kanidm/cbor"
 license = "MIT OR Apache-2.0"
