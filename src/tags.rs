@@ -88,7 +88,7 @@ where
 
 struct BytesDeserializer<'a, E>(&'a [u8], PhantomData<E>);
 
-impl<'de, 'a, E> Deserializer<'de> for BytesDeserializer<'a, E>
+impl<'de, E> Deserializer<'de> for BytesDeserializer<'_, E>
 where
     E: serde::de::Error,
 {

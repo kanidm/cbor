@@ -156,7 +156,7 @@ impl<'a> SliceWrite<'a> {
     }
 }
 
-impl<'a> Write for SliceWrite<'a> {
+impl Write for SliceWrite<'_> {
     type Error = error::Error;
 
     fn write_all(&mut self, buf: &[u8]) -> Result<(), Self::Error> {
@@ -172,4 +172,4 @@ impl<'a> Write for SliceWrite<'a> {
 }
 
 #[cfg(not(feature = "unsealed_read_write"))]
-impl<'a> private::Sealed for SliceWrite<'a> {}
+impl private::Sealed for SliceWrite<'_> {}

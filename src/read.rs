@@ -25,12 +25,12 @@ pub trait Read<'de>: private::Sealed {
     ///
     /// This may, as a side effect, clear the reader's scratch buffer (as the provided
     /// implementation does).
-
-    // A more appropriate lifetime setup for this (that would allow the Deserializer::convert_str
-    // to stay a function) would be something like `fn read<'a, 'r: 'a>(&'a mut 'r immut self, ...) -> ...
-    // EitherLifetime<'r, 'de>>`, which borrows self mutably for the duration of the function and
-    // downgrates that reference to an immutable one that outlives the result (protecting the
-    // scratch buffer from changes), but alas, that can't be expressed (yet?).
+    ///
+    /// A more appropriate lifetime setup for this (that would allow the Deserializer::convert_str
+    /// to stay a function) would be something like `fn read<'a, 'r: 'a>(&'a mut 'r immut self, ...) -> ...
+    /// EitherLifetime<'r, 'de>>`, which borrows self mutably for the duration of the function and
+    /// downgrates that reference to an immutable one that outlives the result (protecting the
+    /// scratch buffer from changes), but alas, that can't be expressed (yet?).
     fn read<'a>(&'a mut self, n: usize) -> Result<EitherLifetime<'a, 'de>> {
         self.clear_buffer();
         self.read_to_buffer(n)?;
@@ -327,7 +327,7 @@ impl<'a> SliceRead<'a> {
 }
 
 #[cfg(any(feature = "std", feature = "alloc"))]
-impl<'a> Offset for SliceRead<'a> {
+impl Offset for SliceRead<'_> {
     #[inline]
     fn byte_offset(&self) -> usize {
         self.index
@@ -338,7 +338,7 @@ impl<'a> Offset for SliceRead<'a> {
     any(feature = "std", feature = "alloc"),
     not(feature = "unsealed_read_write")
 ))]
-impl<'a> private::Sealed for SliceRead<'a> {}
+impl private::Sealed for SliceRead<'_> {}
 
 #[cfg(any(feature = "std", feature = "alloc"))]
 impl<'a> Read<'a> for SliceRead<'a> {
@@ -447,9 +447,9 @@ impl<'a, 'b> SliceReadFixed<'a, 'b> {
 }
 
 #[cfg(not(feature = "unsealed_read_write"))]
-impl<'a, 'b> private::Sealed for SliceReadFixed<'a, 'b> {}
+impl private::Sealed for SliceReadFixed<'_, '_> {}
 
-impl<'a, 'b> Read<'a> for SliceReadFixed<'a, 'b> {
+impl<'a> Read<'a> for SliceReadFixed<'a, '_> {
     #[inline]
     fn next(&mut self) -> Result<Option<u8>> {
         Ok(if self.index < self.slice.len() {
@@ -515,7 +515,7 @@ impl<'a, 'b> Read<'a> for SliceReadFixed<'a, 'b> {
 }
 
 #[cfg(any(feature = "std", feature = "alloc"))]
-impl<'a, 'b> Offset for SliceReadFixed<'a, 'b> {
+impl Offset for SliceReadFixed<'_, '_> {
     #[inline]
     fn byte_offset(&self) -> usize {
         self.index
@@ -560,7 +560,7 @@ impl<'a> MutSliceRead<'a> {
 }
 
 #[cfg(not(feature = "unsealed_read_write"))]
-impl<'a> private::Sealed for MutSliceRead<'a> {}
+impl private::Sealed for MutSliceRead<'_> {}
 
 impl<'a> Read<'a> for MutSliceRead<'a> {
     #[inline]
