@@ -743,5 +743,12 @@ mod std_tests {
         let err =
             serde_cbor_2::from_slice::<serde_cbor_2::Value>(&input).expect_err("recursion limit");
         assert!(err.is_syntax());
+        assert!(err.offset() > 0);
+
+        assert!(!err.is_io());
+        assert!(!err.is_eof());
+        assert!(!err.is_data());
+        assert!(!err.is_scratch_too_small());
+        assert!(err.is_syntax());
     }
 }
