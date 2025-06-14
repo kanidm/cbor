@@ -428,7 +428,9 @@ where
             self.write_u64(5, 1u64)?;
             variant.serialize(&mut *self)?;
         } else {
-            self.writer.write_all(&[(4 << 5) | 2]).map_err(|e| e.into())?;
+            self.writer
+                .write_all(&[(4 << 5) | 2])
+                .map_err(|e| e.into())?;
             self.serialize_unit_variant(name, variant_index, variant)?;
         }
         value.serialize(self)
@@ -508,7 +510,9 @@ where
         if self.enum_as_map {
             self.write_u64(5, 1u64)?;
         } else {
-            self.writer.write_all(&[(4 << 5) | 2]).map_err(|e| e.into())?;
+            self.writer
+                .write_all(&[(4 << 5) | 2])
+                .map_err(|e| e.into())?;
         }
         self.serialize_unit_variant(name, variant_index, variant)?;
         self.serialize_struct(name, len)
