@@ -88,7 +88,7 @@ where
 
 struct BytesDeserializer<'a, E>(&'a [u8], PhantomData<E>);
 
-impl<'de, 'a, E> Deserializer<'de> for BytesDeserializer<'a, E>
+impl<'de, E> Deserializer<'de> for BytesDeserializer<'_, E>
 where
     E: serde::de::Error,
 {
@@ -217,4 +217,4 @@ pub(crate) fn get_tag() -> Option<u64> {
 use std::cell::RefCell;
 
 #[cfg(feature = "tags")]
-thread_local!(static CBOR_TAG: RefCell<Option<u64>> = RefCell::new(None));
+thread_local!(static CBOR_TAG: RefCell<Option<u64>> = const { RefCell::new(None) });

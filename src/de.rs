@@ -774,7 +774,7 @@ where
     }
 }
 
-impl<'de, 'a, R> de::Deserializer<'de> for &'a mut Deserializer<R>
+impl<'de, R> de::Deserializer<'de> for &mut Deserializer<R>
 where
     R: Read<'de>,
 {
@@ -905,7 +905,7 @@ struct SeqAccess<'a, R> {
     len: &'a mut usize,
 }
 
-impl<'de, 'a, R> de::SeqAccess<'de> for SeqAccess<'a, R>
+impl<'de, R> de::SeqAccess<'de> for SeqAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -929,7 +929,7 @@ where
     }
 }
 
-impl<'de, 'a, R> MakeError for SeqAccess<'a, R>
+impl<'de, R> MakeError for SeqAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -942,7 +942,7 @@ struct IndefiniteSeqAccess<'a, R> {
     de: &'a mut Deserializer<R>,
 }
 
-impl<'de, 'a, R> de::SeqAccess<'de> for IndefiniteSeqAccess<'a, R>
+impl<'de, R> de::SeqAccess<'de> for IndefiniteSeqAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -963,7 +963,7 @@ where
     }
 }
 
-impl<'de, 'a, R> MakeError for IndefiniteSeqAccess<'a, R>
+impl<'de, R> MakeError for IndefiniteSeqAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -979,7 +979,7 @@ struct MapAccess<'a, R> {
     accept_packed: bool,
 }
 
-impl<'de, 'a, R> de::MapAccess<'de> for MapAccess<'a, R>
+impl<'de, R> de::MapAccess<'de> for MapAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -1020,7 +1020,7 @@ where
     }
 }
 
-impl<'de, 'a, R> MakeError for MapAccess<'a, R>
+impl<'de, R> MakeError for MapAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -1035,7 +1035,7 @@ struct IndefiniteMapAccess<'a, R> {
     accept_named: bool,
 }
 
-impl<'de, 'a, R> de::MapAccess<'de> for IndefiniteMapAccess<'a, R>
+impl<'de, R> de::MapAccess<'de> for IndefiniteMapAccess<'_, R>
 where
     R: Read<'de>,
 {
@@ -1089,7 +1089,7 @@ where
     }
 }
 
-impl<'de, 'a, R> de::VariantAccess<'de> for UnitVariantAccess<'a, R>
+impl<'de, R> de::VariantAccess<'de> for UnitVariantAccess<'_, R>
 where
     R: Read<'de>,
 {

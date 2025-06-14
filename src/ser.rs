@@ -126,7 +126,7 @@ where
     /// without further information.
     #[inline]
     pub fn self_describe(&mut self) -> Result<()> {
-        let mut buf = [6 << 5 | 25, 0, 0];
+        let mut buf = [(6 << 5) | 25, 0, 0];
         buf[1..].copy_from_slice(&55799u16.to_be_bytes());
         self.writer.write_all(&buf).map_err(|e| e.into())
     }
@@ -140,9 +140,9 @@ where
     #[inline]
     fn write_u8(&mut self, major: u8, value: u8) -> Result<()> {
         if value <= 0x17 {
-            self.writer.write_all(&[major << 5 | value])
+            self.writer.write_all(&[(major << 5) | value])
         } else {
-            let buf = [major << 5 | 24, value];
+            let buf = [(major << 5) | 24, value];
             self.writer.write_all(&buf)
         }
         .map_err(|e| e.into())
@@ -153,7 +153,7 @@ where
         if value <= u16::from(u8::MAX) {
             self.write_u8(major, value as u8)
         } else {
-            let mut buf = [major << 5 | 25, 0, 0];
+            let mut buf = [(major << 5) | 25, 0, 0];
             buf[1..].copy_from_slice(&value.to_be_bytes());
             self.writer.write_all(&buf).map_err(|e| e.into())
         }
@@ -164,7 +164,7 @@ where
         if value <= u32::from(u16::MAX) {
             self.write_u16(major, value as u16)
         } else {
-            let mut buf = [major << 5 | 26, 0, 0, 0, 0];
+            let mut buf = [(major << 5) | 26, 0, 0, 0, 0];
             buf[1..].copy_from_slice(&value.to_be_bytes());
             self.writer.write_all(&buf).map_err(|e| e.into())
         }
@@ -175,7 +175,7 @@ where
         if value <= u64::from(u32::MAX) {
             self.write_u32(major, value as u32)
         } else {
-            let mut buf = [major << 5 | 27, 0, 0, 0, 0, 0, 0, 0, 0];
+            let mut buf = [(major << 5) | 27, 0, 0, 0, 0, 0, 0, 0, 0];
             buf[1..].copy_from_slice(&value.to_be_bytes());
             self.writer.write_all(&buf).map_err(|e| e.into())
         }
@@ -194,7 +194,7 @@ where
             }
             None => {
                 self.writer
-                    .write_all(&[major << 5 | 31])
+                    .write_all(&[(major << 5) | 31])
                     .map_err(|e| e.into())?;
                 true
             }
@@ -428,7 +428,9 @@ where
             self.write_u64(5, 1u64)?;
             variant.serialize(&mut *self)?;
         } else {
-            self.writer.write_all(&[4 << 5 | 2]).map_err(|e| e.into())?;
+            self.writer
+                .write_all(&[(4 << 5) | 2])
+                .map_err(|e| e.into())?;
             self.serialize_unit_variant(name, variant_index, variant)?;
         }
         value.serialize(self)
@@ -508,7 +510,9 @@ where
         if self.enum_as_map {
             self.write_u64(5, 1u64)?;
         } else {
-            self.writer.write_all(&[4 << 5 | 2]).map_err(|e| e.into())?;
+            self.writer
+                .write_all(&[(4 << 5) | 2])
+                .map_err(|e| e.into())?;
         }
         self.serialize_unit_variant(name, variant_index, variant)?;
         self.serialize_struct(name, len)
@@ -520,7 +524,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeTuple for &'a mut Serializer<W>
+impl<W> ser::SerializeTuple for &mut Serializer<W>
 where
     W: Write,
 {
@@ -541,7 +545,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeTupleStruct for &'a mut Serializer<W>
+impl<W> ser::SerializeTupleStruct for &mut Serializer<W>
 where
     W: Write,
 {
@@ -562,7 +566,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeTupleVariant for &'a mut Serializer<W>
+impl<W> ser::SerializeTupleVariant for &mut Serializer<W>
 where
     W: Write,
 {
@@ -589,7 +593,7 @@ pub struct StructSerializer<'a, W> {
     idx: u32,
 }
 
-impl<'a, W> StructSerializer<'a, W>
+impl<W> StructSerializer<'_, W>
 where
     W: Write,
 {
@@ -620,7 +624,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeStruct for StructSerializer<'a, W>
+impl<W> ser::SerializeStruct for StructSerializer<'_, W>
 where
     W: Write,
 {
@@ -646,7 +650,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeStructVariant for StructSerializer<'a, W>
+impl<W> ser::SerializeStructVariant for StructSerializer<'_, W>
 where
     W: Write,
 {
@@ -678,7 +682,7 @@ pub struct CollectionSerializer<'a, W> {
     needs_eof: bool,
 }
 
-impl<'a, W> CollectionSerializer<'a, W>
+impl<W> CollectionSerializer<'_, W>
 where
     W: Write,
 {
@@ -692,7 +696,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeSeq for CollectionSerializer<'a, W>
+impl<W> ser::SerializeSeq for CollectionSerializer<'_, W>
 where
     W: Write,
 {
@@ -713,7 +717,7 @@ where
     }
 }
 
-impl<'a, W> ser::SerializeMap for CollectionSerializer<'a, W>
+impl<W> ser::SerializeMap for CollectionSerializer<'_, W>
 where
     W: Write,
 {
