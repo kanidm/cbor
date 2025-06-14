@@ -1,6 +1,6 @@
 [package]
 name = "serde_cbor_2"
-version = "0.12.0-dev"
+version = "0.13.0"
 authors = [
     "William Brown <william@blackhats.net.au>",
     "James Hodgkinson <james@terminaloutcomes.com>",
