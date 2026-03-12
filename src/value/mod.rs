@@ -3,8 +3,8 @@
 mod de;
 mod ser;
 
-use std::cmp::{Ord, Ordering, PartialOrd};
-use std::collections::BTreeMap;
+use alloc::{boxed::Box, collections::BTreeMap, string::String, vec::Vec};
+use core::cmp::{Ord, Ordering, PartialOrd};
 
 #[doc(inline)]
 pub use self::de::from_value;
